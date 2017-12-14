@@ -1004,7 +1004,7 @@ class OrderContactInformationView(BaseOrderView):
             order = form.save()
             order.form_phase = 3
             order.save()
-            return redirect(reverse('hkm_order_summary', kwargs={'order_id': self.order.order_hash}))
+            return redirect(reverse('hkm_order_summary'))
         kwargs['order_contact_information_form'] = form
         return self.get(request, *args, **kwargs)
 
@@ -1050,7 +1050,7 @@ class OrderSummaryView(BaseOrderView):
                 return redirect(redirect_url)
 
         # TODO error messaging for user in UI
-        return redirect(reverse('hkm_order_summary', kwargs={'order_id': self.order.order_hash}))
+        return redirect(reverse('hkm_order_summary'))
 
     def get_context_data(self, **kwargs):
         context = super(OrderSummaryView, self).get_context_data(**kwargs)
