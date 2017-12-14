@@ -3,6 +3,7 @@
 import hashlib
 import hmac
 import logging
+from urlparse import urljoin
 
 import requests
 from django.conf import settings
@@ -23,8 +24,8 @@ class PaybywayClient(object):
         authcode = hmac.new(PaybywayClient.SECRET_KEY, msg,
                             hashlib.sha256).hexdigest().upper()
 
-        return_url = reverse('hkm_order_confirmation', kwargs={"order_id": order_hash})
-        notify_url = reverse('hkm_order_pbw_notify', kwargs={"order_id": order_hash})
+        return_url = urljoin(settings.HKM_MY_DOMAIN, reverse('hkm_order_confirmation', kwargs={"order_id": order_hash}))
+        notify_url = urljoin(settings.HKM_MY_DOMAIN, reverse('hkm_order_pbw_notify', kwargs={"order_id": order_hash}))
 
         payload = {
             'version': 'w3.1',
