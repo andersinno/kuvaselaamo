@@ -14,6 +14,7 @@ django-appconf
 django-apptemplates
 django-celery
 django-compressor
+django-countries
 django-extensions
 django-nose
 django-redis-sessions

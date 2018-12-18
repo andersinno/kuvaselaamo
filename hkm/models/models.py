@@ -11,11 +11,11 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.postgres.fields import JSONField
 from django.core.cache import caches
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.core.validators import MinValueValidator
+from django_countries.fields import CountryField
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -290,8 +290,6 @@ class PrintProduct(Product):
     is_museum_only = models.BooleanField(default=False, verbose_name=_(u"Museum purchase only"))
 
 
-
-
 class ProductOrderQuerySet(models.QuerySet):
     def for_user(self, user, session_orderid):
         if user.is_authenticated():
@@ -313,14 +311,19 @@ class ProductOrder(BaseModel):
         u'Last name'), max_length=255, null=True, blank=False)
     email = models.EmailField(max_length=255, verbose_name=_(
         u'Email'), null=True, blank=False)
-    phone = PhoneNumberField(verbose_name=_(
-        u'Phone number'), null=True, blank=False)
+    phone = PhoneNumberField(
+        verbose_name=_(u'Phone number'),
+        null=True,
+        blank=False,
+        help_text=_(u'Write phone number in international format (+358)')
+    )
     street_address = models.CharField(verbose_name=_(
         u'Street adress'), max_length=1024, null=True, blank=False)
     postal_code = models.CharField(
         verbose_name=_(u'Postal code'), max_length=64, null=True, blank=False)
     city = models.CharField(verbose_name=_(
         u'City'), max_length=255, null=True, blank=False)
+    country = CountryField(default='FI', verbose_name=_(u'Country'))
 
     # generic relation to any product sub type. This is stored as a reference,
     # but all information regarding the order MUST be stored in directly in

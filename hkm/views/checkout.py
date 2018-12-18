@@ -1,8 +1,8 @@
 import logging
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse, Http404, HttpResponseForbidden
-from django.shortcuts import redirect
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import View
@@ -36,10 +36,10 @@ class OrderContactFormView(TemplateView):
             ProductOrder.objects.filter(
                 pk__in=[line.order_pk for line in request.basket.product_lines]
             ).update(**form.cleaned_data)
-
             return redirect(reverse('hkm_order_summary'))
-        kwargs['order_contact_information_form'] = form
-        return self.get(request, *args, **kwargs)
+        context = self.get_context_data(**kwargs)
+        context['order_contact_information_form'] = form
+        return render(request, self.template_name, context)
 
     def get_context_data(self, **kwargs):
         context = super(OrderContactFormView, self).get_context_data(**kwargs)

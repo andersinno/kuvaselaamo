@@ -49,7 +49,7 @@ class PrintmotorClient(object):
                 'address': order.street_address,
                 'postalArea': order.city,
                 'postalCode': order.postal_code,
-                'countryIso2': "FI",
+                'countryIso2': order.country.code,
             },
             'products': product_payload,
             'meta': {

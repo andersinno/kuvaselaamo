@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'compressor',
     'parler',
     'djangobower',
+    'django_countries',
 
     'django.contrib.sites',
     'django.contrib.auth',
@@ -172,8 +173,7 @@ logging.getLogger('scss').addHandler(logging.StreamHandler())
 
 # Django
 
-PHONENUMBER_DB_FORMAT = 'NATIONAL'
-PHONENUMBER_DEFAULT_REGION = 'FI'
+PHONENUMBER_DB_FORMAT = 'E164'
 
 HKM_MY_DOMAIN = 'http://localhost:3333'
 HKM_MY_DOMAIN = 'http://10.0.1.125:3333'

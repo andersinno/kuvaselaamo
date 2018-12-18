@@ -56,7 +56,7 @@ class OrderContactInformationForm(forms.ModelForm):
     class Meta:
         model = ProductOrder
         fields = ['first_name', 'last_name', 'email',
-                  'phone', 'street_address', 'postal_code', 'city']
+                  'phone', 'street_address', 'postal_code', 'city', 'country']
 
 
 class RegistrationForm(UserCreationForm):
